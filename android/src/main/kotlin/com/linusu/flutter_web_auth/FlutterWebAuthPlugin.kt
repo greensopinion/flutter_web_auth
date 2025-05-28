@@ -12,7 +12,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 
 class FlutterWebAuthPlugin : MethodCallHandler, FlutterPlugin {
     private var context: Context? = null
-    private lateinit var channel: MethodChannel
+    private var channel: MethodChannel? = null
 
     companion object {
         val callbacks = mutableMapOf<String, Result>()
@@ -21,12 +21,12 @@ class FlutterWebAuthPlugin : MethodCallHandler, FlutterPlugin {
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         context = binding.applicationContext
         channel = MethodChannel(binding.binaryMessenger, "flutter_web_auth")
-        channel.setMethodCallHandler(this)
+        channel?.setMethodCallHandler(this)
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
-        channel = null as MethodChannel
+        channel?.setMethodCallHandler(null)
+        channel = null
         context = null
     }
 
